@@ -1,6 +1,5 @@
 var saveBtn = document.getElementsByClassName('saveBtn');
-// var curTime = dayjs().hour();
-var curTime = 12;
+var curTime = dayjs().hour();
 var storage = [{
     name: 'h9',
     text: '',
@@ -45,18 +44,20 @@ $(function () {
 
   var curStorage = JSON.parse(localStorage.getItem('data'));
 
+  //tests for pre-existing local storage items
   if (!curStorage) {
     localStorage.setItem('data', JSON.stringify(storage));
   }
   
+  //this function cycles through each date box and sets their color based on current time
   $('.time-block').each(function (i) {
     
     var timeTag = $(this).attr('id');
     var timeNum = Number(timeTag.substring(1));
     var timeText = getFromStorage(timeTag);
     var blockText = $($(this).children('textarea')[0]);
-    console.log(blockText);
     blockText.val(timeText);
+    console.log(blockText);
     console.log(timeNum);
     
     if (curTime === timeNum) {
@@ -74,6 +75,7 @@ $(function () {
     }
   });
 
+  //this function checks if there is any text in local storage
   function getFromStorage(name) {
     var valueToReturn = '';
   
@@ -88,15 +90,7 @@ $(function () {
   }
 });
 
-
-// function populateBlock() {
-//   for (var i = 0; i < storage.length; i++) {
-//     if (storage[i].name === timeTag) {
-
-//     }
-//   }
-// }
-
+// this function checks for click events on the save button
 $('.container-lg').on('click', '.saveBtn', handleInputSave);
 
 function handleInputSave (e) {
@@ -105,6 +99,7 @@ function handleInputSave (e) {
   updateStor(thisHr, input);
 }
 
+//this function handles local storage items
 function updateStor(storageHr, text) {
   var curStor = localStorage.getItem('data');
   var storageParse = JSON.parse(curStor);
